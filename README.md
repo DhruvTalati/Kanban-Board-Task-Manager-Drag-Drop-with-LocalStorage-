@@ -1,6 +1,8 @@
 # 🚀 Kanban Board Task Manager
 
-A modern and interactive Kanban Board application built using **HTML, CSS, and JavaScript**, featuring drag-and-drop task management and persistent storage using localStorage.
+An interactive Kanban Board application built with HTML, CSS, and JavaScript, featuring drag-and-drop task management across multiple stages. 
+
+The application supports dynamic task creation, deletion, real-time updates, and persistent storage using localStorage, showcasing strong skills in DOM manipulation, event handling, and client-side state management.
 
 ---
 
