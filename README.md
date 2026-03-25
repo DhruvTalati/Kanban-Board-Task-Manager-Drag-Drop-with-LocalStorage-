@@ -7,7 +7,7 @@ The application supports dynamic task creation, deletion, real-time updates, and
 ---
 
 ## 🌐 Live Demo
-🔗kanban-board-task-manager-drag-drop.vercel.app
+🔗https://kanban-board-task-manager-drag-drop.vercel.app/
 
 ---
 
