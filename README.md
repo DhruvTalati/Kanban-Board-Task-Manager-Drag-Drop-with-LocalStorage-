@@ -6,6 +6,11 @@ Built with pure HTML, CSS, and JavaScript, this project focuses on delivering a 
 
 ---
 
+# Live Demo Link
+https://task-flow-pro-task-manager.vercel.app/
+
+---
+
 # Live Features
 
 ## Core Task Management
@@ -74,13 +79,14 @@ TaskFlow-Pro/
 
 # Screenshots
 
-Add screenshots here after uploading images:
+* Dashboard View with Dark Mode
+<img width="1891" height="863" alt="image" src="https://github.com/user-attachments/assets/dba4236b-f316-4f6d-97c7-fcbb22772454" />
 
-* Dashboard View
-* Dark Mode
 * Light Mode
-* Task Detail Popup
-* Responsive Mobile View
+<img width="1900" height="864" alt="image" src="https://github.com/user-attachments/assets/f6e1dac2-3c80-427b-8336-74fa5fdf981c" />
+
+* Add Task Window
+<img width="1064" height="619" alt="image" src="https://github.com/user-attachments/assets/65303a87-08ab-4f66-8c30-5c69a2185f0e" />
 
 ---
 
@@ -89,7 +95,7 @@ Add screenshots here after uploading images:
 1. Download or clone the repository
 
 ```bash
-git clone <your-repository-link>
+git clone https://github.com/DhruvTalati/TaskFlow-Pro-Task-Manager/tree/main
 ```
 
 2. Open folder
