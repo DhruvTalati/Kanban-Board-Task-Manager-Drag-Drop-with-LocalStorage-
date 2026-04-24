@@ -4,48 +4,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanban Board</title>
+  <title>TaskFlow - Pro</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+  <nav>
+    <div class="left">TaskFlow Pro</div>
+    <input type="text" id="search-task" placeholder="Search tasks...">
+    <select id="priority-filter">
+      <option value="all">All Priorities</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="low">Low</option>
+    </select>
+    <div class="right">
+      <button id="theme-toggle">☀️ Light</button>
+      <button id="toggle-modal">Add New Task</button>
+    </div>
+  </nav>
+
   <main>
 
-    <nav>
-      <div class="left">Kanban</div>
-      <div class="right">
-        <button id="toggle-modal">Add New Task</button>
+    <div class="stats-container">
+
+      <div class="stat-card">
+        <h3>Total Tasks</h3>
+        <p id="total-count">0</p>
       </div>
-    </nav>
+
+      <div class="stat-card">
+        <h3>To Do</h3>
+        <p id="todo-count">0</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>In Progress</h3>
+        <p id="progress-count">0</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Done</h3>
+        <p id="done-count">0</p>
+      </div>
+
+    </div>
+
 
     <section class="board">
-
-      <div id="todo" class="task-coloumn">
+      <div id="todo" class="task-column">
         <div class="heading">
           <div class="left">To-Do</div>
           <div class="right">Count</div>
         </div>
       </div>
 
-
-
-      <div id="progress" class="task-coloumn">
+      <div id="progress" class="task-column">
         <div class="heading">
           <div class="left">In Progress</div>
           <div class="right">Count</div>
         </div>
       </div>
 
-      <div id="done" class="task-coloumn">
+      <div id="done" class="task-column">
         <div class="heading">
           <div class="left">Done</div>
           <div class="right">Count</div>
         </div>
       </div>
-
-
     </section>
-
   </main>
 
   <div class="modal add-new-task">
@@ -53,9 +81,30 @@
     <div class="center">
       <input id="task-title-input" type="text" placeholder="Task Title">
       <textarea id="task-desc-input" placeholder="Task Description"></textarea>
+
+      <label for="task-priority">Priority:</label>
+      <select id="task-priority">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+      <input type="date" id="task-date">
       <button id="add-new-task" class="add-task-btn">Add Task</button>
     </div>
   </div>
+
+  <div class="task-view-modal">
+  <div class="task-view-bg"></div>
+
+  <div class="task-view-card">
+    <h2 id="view-title"></h2>
+    <p id="view-desc"></p>
+    <span id="view-priority"></span>
+    <small id="view-date"></small>
+
+    <button id="close-view">Close</button>
+  </div>
+</div>
 
   <script src="script.js"></script>
 </body>
