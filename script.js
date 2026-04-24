@@ -3,18 +3,39 @@ let taskData = {};
 const todo = document.querySelector("#todo");
 const progress = document.querySelector("#progress");
 const done = document.querySelector("#done");
+const searchInput = document.querySelector("#search-task");
+const priorityFilter = document.querySelector("#priority-filter");
 
-const coloums = [todo, progress, done];
+const totalCount = document.querySelector("#total-count");
+const todoCount = document.querySelector("#todo-count");
+const progressCount = document.querySelector("#progress-count");
+const doneCount = document.querySelector("#done-count");
+const themeToggle = document.querySelector("#theme-toggle");
+
+const taskViewModal = document.querySelector(".task-view-modal");
+const taskViewBg = document.querySelector(".task-view-bg");
+
+const viewTitle = document.querySelector("#view-title");
+const viewDesc = document.querySelector("#view-desc");
+const viewPriority = document.querySelector("#view-priority");
+const viewDate = document.querySelector("#view-date");
+const closeView = document.querySelector("#close-view");
+
+const columns = [todo, progress, done];
 let dragElement = null;
+let editTask = null;
+let isEditMode = false;
 
 function updateStorage() {
-  coloums.forEach((col) => {
+  columns.forEach((col) => {
     const tasks = col.querySelectorAll(".task");
 
     taskData[col.id] = Array.from(tasks).map((t) => {
       return {
         title: t.querySelector("h2").innerText,
         desc: t.querySelector("p").innerText,
+        priority: t.querySelector(".priority").innerText,
+        date: t.querySelector(".due-date").innerText.replace("📅 Due: ", ""),
       };
     });
   });
@@ -22,11 +43,37 @@ function updateStorage() {
   localStorage.setItem("tasks", JSON.stringify(taskData));
 }
 
+function openTaskView(task) {
+  viewTitle.innerText = task.querySelector("h2").innerText;
+  viewDesc.innerText = task.querySelector("p").innerText;
+
+  const priority = task.querySelector(".priority").innerText;
+  const priorityClass = task.querySelector(".priority").classList[1];
+
+  viewPriority.innerText = priority;
+  viewPriority.className = "priority " + priorityClass;
+
+  viewDate.innerText = task.querySelector(".due-date").innerText;
+
+  taskViewModal.classList.add("active");
+}
+
+function updateDashboardStats() {
+  const todoTasks = todo.querySelectorAll(".task").length;
+  const progressTasks = progress.querySelectorAll(".task").length;
+  const doneTasks = done.querySelectorAll(".task").length;
+
+  todoCount.innerText = todoTasks;
+  progressCount.innerText = progressTasks;
+  doneCount.innerText = doneTasks;
+  totalCount.innerText = todoTasks + progressTasks + doneTasks;
+}
+
 if (localStorage.getItem("tasks")) {
   const data = JSON.parse(localStorage.getItem("tasks"));
 
   for (const col in data) {
-    const coloumn = document.querySelector(`#${col}`);
+    const column = document.querySelector(`#${col}`);
 
     data[col].forEach((task) => {
       const div = document.createElement("div");
@@ -36,30 +83,66 @@ if (localStorage.getItem("tasks")) {
 
       div.innerHTML = `
         <h2>${task.title}</h2>
+        <span class="priority ${(task.priority || "Low").toLowerCase()}">${task.priority || "Low"}</span>
         <p>${task.desc}</p>
-        <button>Delete</button>`;
+
+        <small class="due-date">📅 Due: ${task.date || "No Date"}</small>
+      <div class="task-actions">
+        <button class="edit-btn">Edit</button>
+         <button class="delete-btn">Delete</button>
+      </div>`;
 
       div.addEventListener("dragstart", () => {
         dragElement = div;
       });
 
-      const deleteBtn = div.querySelector("button");
+      //Delete Button
+
+      const deleteBtn = div.querySelector(".delete-btn");
       deleteBtn.addEventListener("click", () => {
         div.remove();
         updateStorage();
-        coloums.forEach((col) => {
+        columns.forEach((col) => {
           const tasks = col.querySelectorAll(".task");
           const count = col.querySelector(".right");
 
           count.innerHTML = ` Count - ${tasks.length}`;
         });
+        updateDashboardStats();
       });
 
-      coloumn.appendChild(div);
+      //Edit Button
+      const editBtn = div.querySelector(".edit-btn");
+      editBtn.addEventListener("click", () => {
+        isEditMode = true;
+        editTask = div;
+
+        document.querySelector("#task-title-input").value =
+          div.querySelector("h2").innerText;
+
+        document.querySelector("#task-desc-input").value =
+          div.querySelector("p").innerText;
+
+        document.querySelector("#task-date").value = div
+          .querySelector(".due-date")
+          .innerText.replace("📅 Due: ", "");
+
+        addTaskBtn.innerText = "Save Changes";
+
+        modal.classList.add("active");
+      });
+      div.addEventListener("click", (e) => {
+        if (e.target.tagName === "BUTTON") return;
+
+        openTaskView(div);
+      });
+
+      column.appendChild(div);
     });
   }
+  updateDashboardStats();
 }
-coloums.forEach((col) => {
+columns.forEach((col) => {
   const tasks = col.querySelectorAll(".task");
   const count = col.querySelector(".right");
 
@@ -92,7 +175,7 @@ function draggedOnTask(column) {
     column.appendChild(dragElement);
     column.classList.remove("hover-over");
 
-    coloums.forEach((col) => {
+    columns.forEach((col) => {
       const tasks = col.querySelectorAll(".task");
       const count = col.querySelector(".right");
 
@@ -100,6 +183,7 @@ function draggedOnTask(column) {
     });
 
     updateStorage();
+    updateDashboardStats();
   });
 }
 
@@ -127,22 +211,91 @@ bg.addEventListener("click", (e) => {
 addTaskBtn.addEventListener("click", () => {
   const taskTitle = document.querySelector("#task-title-input").value;
   const taskDesc = document.querySelector("#task-desc-input").value;
+  const taskPriority = document.querySelector("#task-priority").value;
+  const taskDate = document.querySelector("#task-date").value;
+
+  if (isEditMode) {
+    editTask.querySelector("h2").innerText = taskTitle;
+    editTask.querySelector("p").innerText = taskDesc;
+    editTask.querySelector(".due-date").innerText = "📅 Due: " + taskDate;
+    editTask.querySelector(".priority").innerText = taskPriority;
+    editTask.querySelector(".priority").className =
+      "priority " + taskPriority.toLowerCase();
+
+    isEditMode = false;
+    editTask = null;
+
+    addTaskBtn.innerText = "Add Task";
+
+    document.querySelector("#task-title-input").value = "";
+    document.querySelector("#task-desc-input").value = "";
+
+    modal.classList.remove("active");
+
+    updateStorage();
+    updateDashboardStats();
+
+    return;
+  }
+
   const div = document.createElement("div");
 
   div.classList.add("task");
   div.setAttribute("draggable", "true");
 
   div.innerHTML = `
-  <h2>${taskTitle}</h2>
-  <p>${taskDesc}</p>
-  <button>Delete</button>
-  `;
+    <h2>${taskTitle}</h2>
+    <span class="priority ${taskPriority.toLowerCase()}">
+       ${taskPriority}
+    </span>
+    <p>${taskDesc}</p>
+
+    <small class="due-date">📅 Due: ${taskDate}</small>
+
+    <div class="task-actions">
+      <button class="edit-btn">Edit</button>
+      <button class="delete-btn">Delete</button>
+    </div>`;
+
   document.querySelector("#task-title-input").value = "";
   document.querySelector("#task-desc-input").value = "";
 
   todo.appendChild(div);
+  div.addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON") return;
+    console.log("task clicked");
+    openTaskView(div);
+  });
 
-  coloums.forEach((col) => {
+  const deleteBtn = div.querySelector(".delete-btn");
+
+  deleteBtn.addEventListener("click", () => {
+    div.remove();
+    updateStorage();
+    updateDashboardStats();
+  });
+
+  const editBtn = div.querySelector(".edit-btn");
+
+  editBtn.addEventListener("click", () => {
+    isEditMode = true;
+    editTask = div;
+
+    document.querySelector("#task-title-input").value =
+      div.querySelector("h2").innerText;
+
+    document.querySelector("#task-desc-input").value =
+      div.querySelector("p").innerText;
+
+    document.querySelector("#task-priority").value =
+      div.querySelector(".priority").innerText;
+
+    addTaskBtn.innerText = "Save Changes";
+
+    modal.classList.add("active");
+  });
+
+  columns.forEach((col) => {
     const tasks = col.querySelectorAll(".task");
     const count = col.querySelector(".right");
 
@@ -163,4 +316,71 @@ addTaskBtn.addEventListener("click", () => {
   });
 
   modal.classList.remove("active");
+});
+
+searchInput.addEventListener("input", () => {
+  const searchText = searchInput.value.toLowerCase();
+
+  const allTasks = document.querySelectorAll(".task");
+
+  allTasks.forEach((task) => {
+    const title = task.querySelector("h2").innerText.toLowerCase();
+    const desc = task.querySelector("p").innerText.toLowerCase();
+
+    if (title.includes(searchText) || desc.includes(searchText)) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+});
+updateDashboardStats();
+
+const white = document.querySelector(".left");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  if (document.body.classList.contains("light-mode")) {
+    themeToggle.innerText = "🌙 Dark";
+    white.style.color = "white";
+  } else {
+    themeToggle.innerText = "☀️ Light";
+  }
+
+  if (document.body.classList.contains("light-mode")) {
+    localStorage.setItem("theme", "light");
+  } else {
+    localStorage.setItem("theme", "dark");
+  }
+});
+
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light-mode");
+  themeToggle.innerText = "🌙 Dark";
+}
+
+priorityFilter.addEventListener("change", () => {
+  const selected = priorityFilter.value;
+
+  const allTasks = document.querySelectorAll(".task");
+
+  allTasks.forEach((task) => {
+    const badge = task.querySelector(".priority");
+
+    if (selected === "all") {
+      task.style.display = "flex";
+    } else if (badge.classList.contains(selected)) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+});
+
+closeView.addEventListener("click", () => {
+  taskViewModal.classList.remove("active");
+});
+
+taskViewBg.addEventListener("click", () => {
+  taskViewModal.classList.remove("active");
 });
