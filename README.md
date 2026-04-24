@@ -1,81 +1,133 @@
-# 🚀 Kanban Board Task Manager
+# TaskFlow Pro – Smart Productivity Workspace
 
-An interactive Kanban Board application built with HTML, CSS, and JavaScript, featuring drag-and-drop task management across multiple stages. 
+TaskFlow Pro is a modern Kanban-based task management web application designed to help users organize work efficiently with a clean and interactive productivity dashboard.
 
-The application supports dynamic task creation, deletion, real-time updates, and persistent storage using localStorage, showcasing strong skills in DOM manipulation, event handling, and client-side state management.
-
----
-
-## 🌐 Live Demo
-🔗https://kanban-board-task-manager-drag-drop.vercel.app/
+Built with pure HTML, CSS, and JavaScript, this project focuses on delivering a premium user experience with real-world task management features such as drag & drop workflow, priority labels, due dates, analytics dashboard, theme switching, and task detail popups.
 
 ---
 
-## 📸 Preview
-<img width="1919" height="867" alt="image" src="https://github.com/user-attachments/assets/f4a05db6-7ca2-4ce9-a13b-a47215376442" />
+# Live Features
 
+## Core Task Management
 
----
+* Add new tasks
+* Edit existing tasks
+* Delete tasks
+* Drag and drop tasks between columns
+* LocalStorage data persistence
 
-## ✨ Features
+##  Productivity Dashboard
 
-- Drag and drop tasks across columns (To-Do, In Progress, Done)
-- Create tasks with title and description
-- Delete tasks dynamically
-- Real-time task count tracking for each column
-- Persistent data storage using localStorage
-- Clean, responsive, and user-friendly interface
+* Total tasks count
+* To Do tasks count
+* In Progress tasks count
+* Done tasks count
 
----
+##  Smart Search & Filters
 
-## 🛠️ Tech Stack
+* Search tasks instantly
+* Filter tasks by priority:
 
-- **Frontend:** HTML, CSS (Flexbox)
-- **Logic:** JavaScript (DOM Manipulation, Events)
-- **Storage:** Browser LocalStorage
+  * High
+  * Medium
+  * Low
 
----
+##  Priority & Planning
 
-## 🧠 Implementation Details
+* Priority badges (High / Medium / Low)
+* Due dates for tasks
 
-- Implemented drag-and-drop functionality using native JavaScript events (`dragstart`, `dragover`, `drop`)
-- Dynamic DOM manipulation for creating, updating, and deleting tasks
-- State management handled via localStorage to ensure data persistence
-- Modular functions used for updating task counts and syncing storage
+##  Modern UI/UX
 
----
+* Dark / Light mode toggle
+* Saved theme preference
+* Smooth animations & hover effects
+* Fully responsive layout
 
-## ⚠️ Limitations
+##  Premium Interaction
 
-- Data is stored locally in the browser and is not shared across users or devices
-- No backend integration or authentication system
-
----
-
-## 🚀 Future Enhancements
-
-- Backend integration (Firebase / Node.js + Database)
-- Task filtering and search functionality
-- Drag-and-drop reordering within columns
-- User authentication and multi-user support
+* Click task card to open detailed popup view
+* View task title, description, priority, due date
 
 ---
 
-## 📂 Project Structure
+#  Tech Stack
 
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-
----
-
-## 👨‍💻 Author
-
-**Dhruv Talati**
+* HTML5
+* CSS3
+* JavaScript (Vanilla JS)
+* LocalStorage API
 
 ---
 
-## ⭐ Support
+#  Project Structure
 
-If you found this project helpful, consider giving it a ⭐ on GitHub!
+```bash
+TaskFlow-Pro/
+│── index.html
+│── style.css
+│── script.js
+│── README.md
+```
+
+---
+
+# Screenshots
+
+Add screenshots here after uploading images:
+
+* Dashboard View
+* Dark Mode
+* Light Mode
+* Task Detail Popup
+* Responsive Mobile View
+
+---
+
+#  How to Run Locally
+
+1. Download or clone the repository
+
+```bash
+git clone <your-repository-link>
+```
+
+2. Open folder
+
+3. Run `index.html` in browser
+
+---
+
+# Key Highlights
+
+* Built without frameworks to strengthen core frontend fundamentals
+* Real-world productivity workflow inspired by modern SaaS tools
+* Clean UI with responsive design principles
+* Strong DOM manipulation + LocalStorage implementation
+
+---
+
+#  Future Enhancements
+
+* User Authentication
+* Backend Integration
+* MongoDB Database
+* Team Collaboration
+* Calendar View
+* Notifications
+* Cloud Sync
+
+---
+
+#  Author
+
+Dhruv Talati
+
+---
+
+# ⭐ If you like this project
+
+Give it a star on GitHub and feel free to fork it.
+
+---
+
